@@ -11,6 +11,5 @@ class Vector2
     def add(vector)
         @x += vector.x
         @y += vector.y
-        p self
     end
 end
