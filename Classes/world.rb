@@ -6,11 +6,9 @@ class World
         @font = font
         @bottom = bottom
         @maxbircksline = @screen.x / 50
-        @maxline= ((@screen.y-(@bottom-@screen.y)) / 50)
-        @world = Array.new(@maxline) { Array.new(@maxbircksline) }
-        for i in 0..1
-            self.createbricksline()
-        end
+        @maxline= ((@screen.y+(@bottom-@screen.y)) / 50)
+        @world = Array.new()
+        self.createbricksline()
     end
 
 
@@ -22,11 +20,13 @@ class World
           line.insert(n,Brick.new(@font,n*50,0))
         end
         @world.unshift(line)
+        if @world.length > 1
         self.modifybricksline
+        end
     end 
 
     def modifybricksline()
-        for i in 1..@maxline
+        for i in 1..@world.length-1
             if(!@world[i].empty?)
                 @world[i].each do |brick|
                     if(brick != nil)
@@ -47,6 +47,14 @@ class World
                     end
                 end
             end
+        end
+    end
+
+    def lose
+        if(@world.length > @maxline)
+            @world = Array.new()
+            self.createbricksline()
+            return true
         end
     end
 end

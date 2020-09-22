@@ -3,14 +3,15 @@ class Character
 
     attr_accessor :balls
     attr_accessor :position
+    attr_accessor :number
 
     def initialize(screen)
         @texture = "./Ressources/character.png"
         @image = Gosu::Image.new(@texture)
         @position = Vector2.new(screen.x/2-@image.width/2,screen.y-@image.height)
         @screen = screen
-        @number = 150
-        @balls = Array.new(0)
+        @number = 1
+        @balls = Array.new()
         @bottom = @position.y
     end
 
