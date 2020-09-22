@@ -1,5 +1,7 @@
 class Brick
 
+    attr_accessor :position
+
     def initialize(font,x,y)
         @heigth = 50
         @width= 5
