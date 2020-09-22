@@ -13,6 +13,7 @@ class Game < Gosu::Window
       @screen = Vector2.new(self.width,self.height)
       @character = Character.new(@screen)
       @bottom = @character.position.y
+      @score = 0
       @world = World.new(@screen,@character,@font,@bottom)
     end
     
@@ -29,9 +30,17 @@ class Game < Gosu::Window
           end
         end
       end
+      if(@character.balls.last == nil && @character.balls.length >= @character.number)
+        @world.createbricksline()
+        @character.balls = Array.new()
+        @score += 1
+      end
+      @score = 0 if @world.lose
     end
     
     def draw
+      @font.draw_text(Gosu.fps,self.width-30,self.height-30,0,1,1,Gosu::Color.rgba(240, 52, 52, 255))
+      @font.draw_text("Score: #{@score}",0+30,self.height-30,0,1,1,Gosu::Color.rgba(240, 52, 52, 255))
       @character.draw
       @world.draw
       @character.balls.each_with_index  do |ball,index|
