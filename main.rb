@@ -3,6 +3,7 @@ require_relative './Classes/character'
 require_relative './Classes/vector2'
 require_relative './Classes/ball'
 require_relative './Classes/brick'
+require_relative './Classes/world'
 
 class Game < Gosu::Window
     def initialize
@@ -11,8 +12,8 @@ class Game < Gosu::Window
       @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
       @screen = Vector2.new(self.width,self.height)
       @character = Character.new(@screen)
-      @line = Array.new
-      self.bricksline
+      @bottom = @character.position.y
+      @world = World.new(@screen,@character,@font,@bottom)
     end
     
     def update
@@ -23,27 +24,18 @@ class Game < Gosu::Window
     
     def draw
       @character.draw
-      @line.each do |brick|
-        if( brick != nil)
-        brick.draw
-        end
-      end
-      if(@character.balls.length != 0)
-        @character.balls.each  do |ball|
-          ball.draw
+      @world.draw
+      @character.balls.each_with_index  do |ball,index|
+        if(@character.balls[index] != nil)
           ball.move
+          if(ball.destruction)
+            @character.balls[index] = nil
+          else
+            ball.draw
+          end
         end
       end
     end
-
-    def bricksline
-        maxnumber = @screen.x / 50
-        number = rand(1..maxnumber)
-        for i in 0..number
-          n = rand(0..maxnumber)
-          @line.insert(n,Brick.new(@font,n*50,0))
-        end
-    end 
 end
 
 Game.new.show

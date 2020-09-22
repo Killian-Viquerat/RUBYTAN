@@ -2,14 +2,16 @@
 class Character
 
     attr_accessor :balls
+    attr_accessor :position
 
     def initialize(screen)
         @texture = "./Ressources/character.png"
         @image = Gosu::Image.new(@texture)
         @position = Vector2.new(screen.x/2-@image.width/2,screen.y-@image.height)
-        @balls = []
         @screen = screen
         @number = 150
+        @balls = Array.new(0)
+        @bottom = @position.y
     end
 
     def draw()
@@ -18,12 +20,18 @@ class Character
 
     def shoot()
         if (@balls.length <= @number)
-        @balls.push(Ball.new(@position, @screen))
+            @balls.push(Ball.new(@position, @screen, @bottom))
         end
     end
 
     def move(vector2)
-        @position.add(vector2)
+        if (@position.x > @screen.x)
+            @position = Vector2.new(0,@screen.y-@image.height)
+        elsif (@position.x < 0)
+            @position = Vector2.new(@screen.x-@image.width/2,@screen.y-@image.height)
+        else 
+            @position.add(vector2)
+        end
     end
 
 end
