@@ -13,15 +13,21 @@ class Character
         @number = 1
         @balls = Array.new()
         @bottom = @position.y
+        @lastlaunch = Time.now
     end
 
+    
     def draw()
         @image.draw(@position.x,@position.y,0)
     end
 
-    def shoot()
-        if (@balls.length <= @number)
-            @balls.push(Ball.new(@position, @screen, @bottom))
+    def shoot(mousex,mousey)
+        direction = Vector2.new(mousex,mousey)
+        if (@balls.length <= @number-1)
+            if(Time.now - @lastlaunch > 0.05)
+                @balls.push(Ball.new(@position, @screen, @bottom, direction))
+                @lastlaunch = Time.now
+            end
         end
     end
 
