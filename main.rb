@@ -7,22 +7,24 @@ require_relative './Classes/world'
 require_relative './Classes/powerup'
 
 class Game < Gosu::Window
+
     def initialize
       super 600, 800
       self.caption = "RUBYTAN"
+      @score = 0
       @cursor = Gosu::Image.new(self, './Ressources/cursor.png')
       @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
       @screen = Vector2.new(self.width,self.height)
       @character = Character.new(@screen)
       @bottom = @character.position.y
-      @score = 0
       @world = World.new(@screen,@character,@font,@bottom)
+      
     end
     
     def update
       @character.move(Vector2.new(-5,0)) if Gosu.button_down?(Gosu::KB_LEFT) || Gosu.button_down?(Gosu::KB_A)
       @character.move(Vector2.new(5,0))  if Gosu.button_down?(Gosu::KB_RIGHT) || Gosu.button_down?(Gosu::KB_D)
-      @character.shoot if Gosu.button_down?(Gosu::KB_UP)
+      @character.shoot(self.mouse_x,self.mouse_y) if button_down?(Gosu::MsLeft)
       @character.balls.each_with_index  do |ball,index|
         if(@character.balls[index] != nil)
           if(ball.destruction)
