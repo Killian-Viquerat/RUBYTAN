@@ -2,13 +2,13 @@ class Brick
 
     attr_accessor :position
 
-    def initialize(font,x,y)
+    def initialize(font,x,y,nb)
         @heigth = 50
         @width= 5
         @position = Vector2.new(x,y)
         @offset = Vector2.new(22,18)
         @font = font
-        @number = 1
+        @number = nb
     end
 
     def draw
