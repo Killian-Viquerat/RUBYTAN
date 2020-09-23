@@ -4,6 +4,7 @@ require_relative './Classes/vector2'
 require_relative './Classes/ball'
 require_relative './Classes/brick'
 require_relative './Classes/world'
+require_relative './Classes/powerup'
 
 class Game < Gosu::Window
     def initialize
