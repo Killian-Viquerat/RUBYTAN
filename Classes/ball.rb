@@ -1,12 +1,16 @@
 
 class Ball
-    def initialize(characterPosition,screen,bottom)
+
+    attr_accessor :position
+
+    def initialize(characterPosition,screen,bottom,direction)
         @texture = "./Ressources/ball.png"
         @image = Gosu::Image.new(@texture)
         @position = Vector2.new(characterPosition.x,bottom-@image.height)
         @screen = screen
-        @vector = Vector2.new(0,-5)
+        @vector =  Vector2.new(@position.x,@position.y)
         @bottom = bottom
+        @direction = direction
     end
 
     def draw()
@@ -16,7 +20,12 @@ class Ball
         if (@position.y <= 0)
             @vector = Vector2.new(0,5)
         end
+        @vector.norme(@direction)
         @position.add(@vector)
+    end
+
+    def space()
+        @image.height*2
     end
 
     def destruction()
