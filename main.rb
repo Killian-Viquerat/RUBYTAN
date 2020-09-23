@@ -10,6 +10,7 @@ class Game < Gosu::Window
     def initialize
       super 600, 800
       self.caption = "RUBYTAN"
+      @cursor = Gosu::Image.new(self, './Ressources/cursor.png')
       @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
       @screen = Vector2.new(self.width,self.height)
       @character = Character.new(@screen)
@@ -40,6 +41,7 @@ class Game < Gosu::Window
     end
     
     def draw
+      @cursor.draw(self.mouse_x, self.mouse_y, 0)
       @font.draw_text(Gosu.fps,self.width-30,self.height-30,0,1,1,Gosu::Color.rgba(240, 52, 52, 255))
       @font.draw_text("Score: #{@score}",0+30,self.height-30,0,1,1,Gosu::Color.rgba(240, 52, 52, 255))
       @character.draw
