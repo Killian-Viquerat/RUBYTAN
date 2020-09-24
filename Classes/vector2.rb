@@ -14,7 +14,7 @@ class Vector2
     end
 
     def norme(vector)
-        @x = (@x-vector.x) / 80
-        @y = (@y-vector.y) / 80
+        @x = (vector.x-@x) / 75
+        @y = (vector.y-@y) / 75
     end
 end
