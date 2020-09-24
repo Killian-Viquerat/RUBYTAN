@@ -18,14 +18,18 @@ class Ball
     end
     def move()
         if (@position.y <= 0)
-            @vector = Vector2.new(0,5)
+            @vector.y = -@vector.y
+        elsif (@position.x <= 0)
+            @vector.x = -@vector.x
+        elsif (@position.x >= @screen.x)
+            @vector.x = -@vector.x
         end
-        @vector.norme(@direction)
-        @position.add(@vector)
-    end
 
-    def space()
-        @image.height*2
+        if(@direction != nil)
+        @vector.norme(@direction)
+        @direction = nil
+        end
+        @position.add(@vector)
     end
 
     def destruction()
