@@ -29,12 +29,10 @@ class World
     end 
 
     def modifybricksline()
-        for i in 1..@world.length-1
-            if(!@world[i].empty?)
-                @world[i].each_with_index do |brick,index|
-                    if(brick != nil)
-                        brick.position.y = i*50
-                    end
+        for i in 1...@world.length
+            @world[i].each_with_index do |item,index|
+                if(item != nil)
+                    item.position.y = i*50
                 end
             end
         end
@@ -55,11 +53,9 @@ class World
     def draw
         Gosu.draw_rect(0,@bottom,@screen.x,1,Gosu::Color.rgba(240, 52, 52, 255))
         @world.each do |line|
-            if(!line.empty?)
-                line.each do |item|
-                    if(item != nil)
-                        item.draw
-                    end
+            line.each do |item|
+                if(item != nil)
+                    item.draw
                 end
             end
         end

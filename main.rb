@@ -24,7 +24,13 @@ class Game < Gosu::Window
     def update
       @character.move(Vector2.new(-5,0)) if Gosu.button_down?(Gosu::KB_LEFT) || Gosu.button_down?(Gosu::KB_A)
       @character.move(Vector2.new(5,0))  if Gosu.button_down?(Gosu::KB_RIGHT) || Gosu.button_down?(Gosu::KB_D)
-      @character.shoot(self.mouse_x,self.mouse_y) if button_down?(Gosu::MsLeft)
+      if button_down?(Gosu::MsLeft)
+        if(@character.state == :freeze)
+          @character.state = :shoot 
+          @character.mouse = Vector2.new(self.mouse_x, self.mouse_y)
+        end
+      end
+      @character.shoot
       @character.balls.each_with_index  do |ball,index|
         if(@character.balls[index] != nil)
           if(ball.destruction)
@@ -35,6 +41,7 @@ class Game < Gosu::Window
         end
       end
       if(@character.balls.last == nil && @character.balls.length >= @character.number)
+        @character.state = :freeze
         @world.createbricksline()
         @character.balls = Array.new()
         @score += 1
