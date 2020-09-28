@@ -1,8 +1,9 @@
 class World
 
-    def initialize(screen,character,font,bottom)
+    attr_accessor :world
+
+    def initialize(screen,font,bottom)
         @screen = screen
-        @character = character
         @font = font
         @bottom = bottom
         @maxbircksline = @screen.x / 50

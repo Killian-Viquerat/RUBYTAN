@@ -5,19 +5,19 @@ class Character
     attr_accessor :position
     attr_accessor :number
     attr_accessor :state
-    attr_accessor :mouse
+    attr_accessor :direction
 
     def initialize(screen)
         @texture = "./Ressources/character.png"
         @image = Gosu::Image.new(@texture)
         @position = Vector2.new(screen.x/2-@image.width/2,screen.y-@image.height)
         @screen = screen
-        @number = 50
+        @number = 1
         @balls = Array.new()
         @bottom = @position.y
         @lastlaunch = Time.now
         @state = :freeze
-        @mouse = Vector2.new(0,0)
+        @direction = Vector2.new(0,0)
     end
 
     
@@ -27,10 +27,9 @@ class Character
 
     def shoot()
         if(@state == :shoot) 
-            direction = @mouse
             if (@balls.length <= @number-1)
                 if(Time.now - @lastlaunch > 0.05)
-                    @balls.push(Ball.new(@position, @screen, @bottom, direction))
+                    @balls.push(Ball.new(@position, @screen, @bottom, @direction))
                     @lastlaunch = Time.now
                 end
             end
@@ -38,13 +37,6 @@ class Character
     end
 
     def move(vector2)
-        if (@position.x > @screen.x)
-            @position = Vector2.new(0,@screen.y-@image.height)
-        elsif (@position.x < 0)
-            @position = Vector2.new(@screen.x-@image.width/2,@screen.y-@image.height)
-        else 
-            @position.add(vector2)
-        end
+            @position = Vector2.new(vector2.x,vector2.y)
     end
-
 end

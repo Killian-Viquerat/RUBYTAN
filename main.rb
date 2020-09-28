@@ -12,28 +12,27 @@ class Game < Gosu::Window
       super 600, 800
       self.caption = "RUBYTAN"
       @score = 0
-      @cursor = Gosu::Image.new(self, './Ressources/cursor.png')
+      @cursor = Gosu::Image.new('./Ressources/cursor.png')
       @font = Gosu::Font.new(self, Gosu::default_font_name, 20)
       @screen = Vector2.new(self.width,self.height)
       @character = Character.new(@screen)
       @bottom = @character.position.y
-      @world = World.new(@screen,@character,@font,@bottom)
+      @world = World.new(@screen,@font,@bottom)
       
     end
     
     def update
-      @character.move(Vector2.new(-5,0)) if Gosu.button_down?(Gosu::KB_LEFT) || Gosu.button_down?(Gosu::KB_A)
-      @character.move(Vector2.new(5,0))  if Gosu.button_down?(Gosu::KB_RIGHT) || Gosu.button_down?(Gosu::KB_D)
       if button_down?(Gosu::MsLeft)
         if(@character.state == :freeze)
           @character.state = :shoot 
-          @character.mouse = Vector2.new(self.mouse_x, self.mouse_y)
+          @character.direction = Vector2.new(self.mouse_x, self.mouse_y)
         end
       end
-      @character.shoot
+      @character.shoot if @character.state == :shoot
       @character.balls.each_with_index  do |ball,index|
         if(@character.balls[index] != nil)
           if(ball.destruction)
+            @character.move(ball.position) if ball == @character.balls.first
             @character.balls[index] = nil
           else
             ball.move
@@ -50,6 +49,9 @@ class Game < Gosu::Window
     end
     
     def draw
+      if(@character.state == :freeze)
+        Gosu.draw_line(@character.position.x,@bottom,Gosu::Color.rgba(255, 255, 255, 255),self.mouse_x, self.mouse_y,Gosu::Color.rgba(0, 0, 0, 255))
+      end
       @cursor.draw(self.mouse_x, self.mouse_y, 0)
       @font.draw_text(Gosu.fps,self.width-30,self.height-30,0,1,1,Gosu::Color.rgba(240, 52, 52, 255))
       @font.draw_text("Score: #{@score}",0+30,self.height-30,0,1,1,Gosu::Color.rgba(240, 52, 52, 255))

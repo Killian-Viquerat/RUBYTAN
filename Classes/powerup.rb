@@ -21,4 +21,5 @@ class Powerup
         Gosu.draw_rect(@position.x + @centercontent,@position.y + @centercontent - @heigth/4 + @width/2,@width,@heigth/2,Gosu::Color.rgba(218, 242, 52, 255))
         Gosu.draw_rect(@position.x + @centercontent - @heigth/4 + @width/2,@position.y + @centercontent,@heigth/2,@width,Gosu::Color.rgba(218, 242, 52, 255))
     end
+
 end

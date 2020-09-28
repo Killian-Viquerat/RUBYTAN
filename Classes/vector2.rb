@@ -13,7 +13,7 @@ class Vector2
         @y += vector.y
     end
 
-    def norme(vector)
+    def sub(vector)
         @x = (vector.x-@x) / 75
         @y = (vector.y-@y) / 75
     end

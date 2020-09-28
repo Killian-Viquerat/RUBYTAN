@@ -26,7 +26,7 @@ class Ball
         end
 
         if(@direction != nil)
-        @vector.norme(@direction)
+        @vector.sub(@direction)
         @direction = nil
         end
         @position.add(@vector)
