@@ -15,14 +15,17 @@ class World
 
 
     def createbricksline()
-        line = Array.new()
-        number = rand(1..@maxbircksline)
+        line = Array.new(@maxbircksline)
+        number = rand(1..@maxbircksline-1)
         for i in 0..number
-          n = rand(0..@maxbircksline)
-          line.insert(n,Brick.new(@font,n*50,0,@iteration))
+          n = rand(0..@maxbircksline-1)
+          puts "Test: index: #{n} value: #{line[n]} = nil ? #{line[n]==nil}"
+          if(line[n]==nil)
+            line.insert(n,Brick.new(@font,n*50,0,@iteration))
+          end
         end
         @world.unshift(line)
-        if @world.length > 1
+        if @world.length > 2
             self.modifybricksline
             self.addpowerup
         end
@@ -55,7 +58,7 @@ class World
         Gosu.draw_rect(0,@bottom,@screen.x,1,Gosu::Color.rgba(240, 52, 52, 255))
         @world.each do |line|
             line.each do |item|
-                if(item != nil)
+                if(!item.nil?)
                     item.draw
                 end
             end
@@ -63,7 +66,7 @@ class World
     end
 
     def lose
-        if(@world.length > @maxline)
+        if(@world.length > @maxline && !@world.last == [])
             @world = Array.new()
             @iteration = 1
             self.createbricksline()

@@ -6,6 +6,8 @@ require_relative './Classes/brick'
 require_relative './Classes/world'
 require_relative './Classes/powerup'
 
+Polygon = Struct.new(:min, :max)
+
 class Game < Gosu::Window
 
     def initialize
@@ -22,12 +24,6 @@ class Game < Gosu::Window
     end
     
     def update
-      if button_down?(Gosu::MsLeft)
-        if(@character.state == :freeze)
-          @character.state = :shoot 
-          @character.direction = Vector2.new(self.mouse_x, self.mouse_y)
-        end
-      end
       @character.shoot if @character.state == :shoot
       @character.balls.each_with_index  do |ball,index|
         if(@character.balls[index] != nil)
@@ -52,7 +48,12 @@ class Game < Gosu::Window
       if(@character.state == :freeze)
         Gosu.draw_line(@character.position.x,@bottom,Gosu::Color.rgba(255, 255, 255, 255),self.mouse_x, self.mouse_y,Gosu::Color.rgba(0, 0, 0, 255))
       end
+
+      #Game UI
       @cursor.draw(self.mouse_x, self.mouse_y, 0)
+      @font.draw_text("#{self.mouse_x},#{self.mouse_y}",self.mouse_x,self.mouse_y+20,0,1,1,Gosu::Color.rgba(240, 52, 52, 255))
+      Gosu.draw_rect(0,@bottom,@screen.x,@screen.y-@bottom,Gosu::Color.rgba(0, 0, 153, 50))
+      #Text for game
       @font.draw_text(Gosu.fps,self.width-30,self.height-30,0,1,1,Gosu::Color.rgba(240, 52, 52, 255))
       @font.draw_text("Score: #{@score}",0+30,self.height-30,0,1,1,Gosu::Color.rgba(240, 52, 52, 255))
       @character.draw
@@ -62,6 +63,35 @@ class Game < Gosu::Window
           ball.draw
         end
       end
+    end
+
+    def button_down(button)
+      case button
+      when Gosu::MsLeft
+        if(@character.state == :freeze)
+          @character.state = :shoot 
+          @character.direction = Vector2.new(self.mouse_x, self.mouse_y)
+        end
+      end
+    end
+
+    def overlap(polygona,polygonb)
+       d1x = polygonb.min.x - polygona.max.x;
+       d1y = polygonb.min.y - polygona.max.y;
+       d2x = polygona.min.x - polygonb.max.x;
+       d2y = polygona.min.y - polygonb.max.y;
+
+    if (d1x > 0.0 || d1y > 0.0)
+        return false;
+    end
+    if (d2x > 0.0 || d2y > 0.0)
+        return false;
+    end
+    return true;
+    end
+
+    def side?()
+
     end
 end
 

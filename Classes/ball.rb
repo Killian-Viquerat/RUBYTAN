@@ -2,6 +2,7 @@
 class Ball
 
     attr_accessor :position
+    attr_reader :polygon
 
     def initialize(characterPosition,screen,bottom,direction)
         @texture = "./Ressources/ball.png"
@@ -11,6 +12,7 @@ class Ball
         @vector =  Vector2.new(@position.x,@position.y)
         @bottom = bottom
         @direction = direction
+        @polygon = Polygon.new(Vector2.new(@position.x,position.y),Vector2.new(@position.x+@image.width,@position.y+@image.height))
     end
 
     def draw()
@@ -38,5 +40,18 @@ class Ball
         else
             return false
         end 
+    end
+
+    def collision_change_direction(direction)
+        case direction
+        when :top
+            @vector.y = -@vector.y
+        when :bottom
+            @vector.y = +@vector.y
+        when :right
+            @vector.x = +@vector.x
+        when :left
+            @vector.x = -@vector.x
+        end
     end
 end

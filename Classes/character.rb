@@ -22,7 +22,7 @@ class Character
 
     
     def draw()
-        @image.draw(@position.x,@position.y,0)
+        @image.draw(@position.x,@position.y,1)
     end
 
     def shoot()
