@@ -16,13 +16,12 @@ class World
 
     def createbricksline()
         line = Array.new(@maxbircksline)
-        number = rand(1..@maxbircksline-1)
+        number = rand(1...@maxbircksline)
         for i in 0..number
-          n = rand(0..@maxbircksline-1)
-          puts "Test: index: #{n} value: #{line[n]} = nil ? #{line[n]==nil}"
-          if(line[n]==nil)
-            line.insert(n,Brick.new(@font,n*50,0,@iteration))
-          end
+            n = rand(0...@maxbircksline)
+            if(line[n]==nil)
+                line[n] = Brick.new(@font,n*50,0,@iteration)
+            end
         end
         @world.unshift(line)
         if @world.length > 2
@@ -49,8 +48,8 @@ class World
             emplacement = rand(0..@maxbircksline)
             if @world[line][emplacement] == nil
                 @world[line][emplacement] = Powerup.new(emplacement*50,line*50)
-                i+=1
             end
+            i+=1
         end
     end
 
@@ -66,8 +65,8 @@ class World
     end
 
     def lose
-        if(@world.length > @maxline && !@world.last == [])
-            @world = Array.new()
+        if(@world[@maxline-1] && !@world[@maxline-1].empty?)
+            @world = Array.new(@maxline){Array.new(@maxbircksline)}
             @iteration = 1
             self.createbricksline()
             return true

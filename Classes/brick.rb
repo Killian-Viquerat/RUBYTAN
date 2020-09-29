@@ -15,10 +15,10 @@ class Brick
     end
 
     def draw
-        Gosu.draw_rect(@position.x,@position.y,Heigth,Width,Gosu::Color.rgba(240, 52, 52, 100))
-        Gosu.draw_rect(@position.x,@position.y+Heigth-Width,Heigth,Width,Gosu::Color.rgba(240, 52, 52, 100))
-        Gosu.draw_rect(@position.x,@position.y,Width,Heigth,Gosu::Color.rgba(240, 52, 52, 100))
-        Gosu.draw_rect(@position.x+Heigth-Width,@position.y,Width,Heigth,Gosu::Color.rgba(240, 52, 52, 100))
+        Gosu.draw_rect(@position.x,@position.y,Heigth,Width,Gosu::Color.rgba(240, 52, 52, 255))
+        Gosu.draw_rect(@position.x,@position.y+Heigth-Width,Heigth,Width,Gosu::Color.rgba(240, 52, 52, 255))
+        Gosu.draw_rect(@position.x,@position.y,Width,Heigth,Gosu::Color.rgba(240, 52, 52, 255))
+        Gosu.draw_rect(@position.x+Heigth-Width,@position.y,Width,Heigth,Gosu::Color.rgba(240, 52, 52, 255))
         @font.draw_text(@number,@position.x+Offset.x,@position.y+Offset.y,0,1,1,Gosu::Color.rgba(240, 52, 52, 255))
     end
 
