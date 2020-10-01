@@ -10,11 +10,11 @@ class World
         @maxline= ((@screen.y+(@bottom-@screen.y)) / 50)
         @world = Array.new(@maxline){ Array.new(@maxbircksline)}
         @iteration = 1
-        self.createbricksline()
+        self.createbricksline
     end
 
 
-    def createbricksline()
+    def createbricksline
         line = Array.new(@maxbircksline)
         number = rand(1...@maxbircksline)
         for i in 0..number
@@ -31,7 +31,7 @@ class World
         @iteration += 1
     end 
 
-    def modifybricksline()
+    def modifybricksline
         for i in 1...@world.length
             @world[i].each_with_index do |item,index|
                 if(item != nil)
@@ -41,7 +41,7 @@ class World
         end
     end
 
-    def addpowerup()
+    def addpowerup
         i = 0
         while i < 2 do
             line = rand(0..@iteration-1)
@@ -65,7 +65,7 @@ class World
     end
 
     def lose
-        if(@world[@maxline-1] && !@world[@maxline-1].empty?)
+        if(@world[@maxline].any?)
             @world = Array.new(@maxline){Array.new(@maxbircksline)}
             @iteration = 1
             self.createbricksline()

@@ -3,6 +3,7 @@ class Ball
 
     attr_accessor :position
     attr_reader :polygon
+    attr_reader :vector
 
     def initialize(characterPosition,screen,bottom,direction)
         @texture = "./Ressources/ball.png"
