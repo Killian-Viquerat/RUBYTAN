@@ -45,14 +45,14 @@ class Ball
 
     def collision_change_direction(direction)
         case direction
-        when :top
-            @vector.y = -@vector.y
-        when :bottom
-            @vector.y = +@vector.y
-        when :right
-            @vector.x = +@vector.x
-        when :left
-            @vector.x = -@vector.x
+        when "top"
+            @vector.y *= -1
+        when "bottom"
+            @vector.y *= -1
+        when "right"
+            @vector.x *= -1
+        when "left"
+            @vector.x *= -1
         end
     end
 end

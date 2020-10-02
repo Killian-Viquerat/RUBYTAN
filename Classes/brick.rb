@@ -1,6 +1,7 @@
 class Brick
 
     attr_accessor :position
+    attr_accessor :number
     attr_reader :polygon
 
     Heigth = 50
@@ -22,6 +23,7 @@ class Brick
         @font.draw_text(@number,@position.x+Offset.x,@position.y+Offset.y,0,1,1,Gosu::Color.rgba(240, 52, 52, 255))
     end
 
-    def collapse(ball)
+    def destroy?
+        number == 0 ? true : false
     end
 end

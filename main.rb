@@ -20,7 +20,6 @@ class Game < Gosu::Window
       @character = Character.new(@screen)
       @bottom = @character.position.y
       @world = World.new(@screen,@font,@bottom)
-      
     end
     
     def update
@@ -31,6 +30,23 @@ class Game < Gosu::Window
             @character.move(ball.position) if ball == @character.balls.first
             @character.balls[index] = nil
           else
+            if(ball.position.y != ball.vector.y)
+              y = ((ball.position.y + ball.vector.y)/50).floor
+              x = ((ball.position.x + ball.vector.x)/50).floor
+              if(!@world.world[y][x].nil?  )
+                if(@world.world[y][x].instance_of?(Brick))
+                  brick = @world.world[y][x]
+                  brick.number -= 1
+                  @world.world[y][x] = nil if brick.destroy?
+                  direction = "bottom"
+                  ball.collision_change_direction(direction)
+                elsif(@world.world[y][x].instance_of?(Powerup))
+                  @character.number += 1
+                  @world.world[y][x] = nil
+                end
+                puts "block at y:#{y} and x:#{x} touch"
+              end
+            end
             ball.move
           end
         end
